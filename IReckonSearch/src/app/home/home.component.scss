@@ -1,0 +1,57 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+mat-toolbar {
+  background: #2488fa;
+  color: white;
+  height: 200px;
+  div {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+
+    flex-direction: column;
+
+    h1 {
+      display: flex;
+      flex: 1;
+      padding: 30px 0;
+      align-items: center;
+    }
+    form {
+      flex: 1;
+      display: flex;
+
+      .search {
+          background: white;
+          color: black;
+          height: 50px;
+          flex: 0.8;
+          flex-direction: initial;
+
+          mat-icon {
+              width: 35px;
+              margin-top : 13px;
+              margin-left: 13px;
+          }
+          input {
+              font-size: 12px;
+              border: none;
+              width: 95%;
+              padding-left: 10px;
+          }
+      }
+        button {
+            margin-left: 20px;
+            width: 50px;
+            height: 50px;
+        }
+    }
+  }
+}
+
+content {
+    background: lightgrey;
+}
