@@ -1,18 +1,78 @@
-<mat-toolbar>
-  <div>
-    <h1>Profiles</h1>
-    <form class="search-form">
-      <div class="search">
-        <mat-icon>search</mat-icon>
-        <input type="text"  placeholder="Search profiles" />
-      </div>
-      <button mat-raised-button color="primary">
-        <mat-icon>search</mat-icon>
-      </button>
-    </form>
-  </div>
-</mat-toolbar>
+<div class="container">
+  <div class="header">
+    <div>
+      <h1>Profiles</h1>
+      <form class="search-form" name="search">
+        <mat-form-field>
+          <mat-icon>search</mat-icon>
+          <input matInput name="search" type="text" [disabled]="isLoading$ | async" [(ngModel)]="searchInput"
+             placeholder="Search profiles" />
+        </mat-form-field>
 
-<content>
-  
-</content>
+        <button mat-raised-button (click)="search()" color="primary">
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="content" >
+      <mat-progress-spinner *ngIf="isLoading$ | async" mode="indeterminate"></mat-progress-spinner>
+
+      <mat-table  matSort [dataSource]="dataSource" [ngClass]="{'hidden': (isLoading$ | async) }" class="mat-elevation-z8">
+        <ng-container matColumnDef="photo">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <img [src]="element.photo" />
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="localid">
+          <mat-header-cell mat-sort-header  *matHeaderCellDef> Local ID </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.localid}} </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="email">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> Email Address </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="first_name">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.first_name}} {{ element.last_name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> Phone Number </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.phone }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> Address </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.address }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="modified">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> Modified </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.modified | date }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="links">
+          <mat-header-cell class="actions" *matHeaderCellDef> View </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-button>
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [pageSize]="10" [ngClass]="{'hidden': (isLoading$ | async) }" class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

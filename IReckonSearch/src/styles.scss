@@ -9,4 +9,22 @@ body {
 body {
   margin: 0;
   padding: 0;
+
+  .container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    .header {
+      display: flex;
+      height: 200px;
+      background: #2488fa;
+ 
+        color: white;
+    }
+
+    ::deep mat-progress-spinner {
+      color: red;
+    }
+  }
 }

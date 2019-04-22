@@ -1,0 +1,2 @@
+[0422/094809.785:ERROR:file_io_win.cc(170)] CreateFile C:\Users\NISSAL~1\AppData\Local\Temp\karma-55372539\Crashpad\reports\64f0c85c-f332-403d-a6d2-56cb14bb0786.dmp: Le chemin d’accès spécifié est introuvable. (0x3)
+[0422/094809.786:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
