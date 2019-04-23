@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect, tick, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import { AppState, reducer, initialState, State } from '../state';
+import { reducer, initialState, State } from '../state';
 import { Store, StoreModule } from '@ngrx/store';
-import { SHOW_PROFILE, processSearch } from '../actions';
+import { SHOW_PROFILE, showProfile } from '../actions';
 import { Customer } from '../models';
-import { MatIconModule, MatToolbarModule, MatSortModule, MatPaginatorModule, MatProgressSpinnerModule, MatInputModule, MatTableModule } from '@angular/material';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MyMaterialsModule } from '../my-materials/my-materials.module';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -18,13 +18,7 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatIconModule,
-        MatToolbarModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatInputModule,
-        MatTableModule,
+        MyMaterialsModule,
         FormsModule,
         BrowserAnimationsModule,
         HttpClientTestingModule,
@@ -63,7 +57,7 @@ describe('HomeComponent', () => {
         birthdate: "",
         email2: "",
         localid: 5,
-        loyalti_member_id: "",
+        loyalty_member_id: "",
         modified: "",
         phone: "",
         photo: "",
@@ -75,7 +69,7 @@ describe('HomeComponent', () => {
       component = fixture.componentInstance;
       component.displayCustomerProfile(customer);
 
-      expect(store.dispatch).toHaveBeenCalledWith({ type: SHOW_PROFILE, customer: customer });
+      expect(store.dispatch).toHaveBeenCalledWith(showProfile(customer));
     });
   });
 });

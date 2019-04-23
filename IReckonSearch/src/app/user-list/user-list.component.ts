@@ -1,17 +1,21 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { Customer } from '../models';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../state';
 import { showProfile } from '../actions';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
+  ngOnDestroy(): void {
+  }
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   
@@ -37,10 +41,12 @@ export class UserListComponent implements OnInit {
     this.dataSource = new MatTableDataSource(new Array<Customer>());
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-
-    this.customers$.subscribe(customers => {
-      this.dataSource.data = customers;
-    });
+    this.customers$.pipe(
+      map(x => {
+        this.dataSource.data = x;
+      }),
+      untilDestroyed(this)
+    ).subscribe();
   }
 
   showProfile(customer: Customer) {

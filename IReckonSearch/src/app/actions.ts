@@ -7,27 +7,6 @@ export type ShowProfile = {
     customer: Customer
 };
 
-export const SEARCH_FINISHED = "SEARCH_FINISHED";
-export const searchFinished = (filteredCustomers: Customer[]) => ({ type: SEARCH_FINISHED, filteredCustomers });
-export type SearchFinished = {
-    type: typeof SEARCH_FINISHED,
-    filteredCustomers: Array<Customer>
-};
-
-export const PROCESS_SEARCH = "PROCESS_SEARCH";
-export const processSearch = (input: string) => ({ type: PROCESS_SEARCH, input: input });
-export type ProcessSearch = {
-    type: typeof PROCESS_SEARCH,
-    input: string
-};
-
-export const NO_SEARCH_RESULT = "NO_SEARCH_RESULT";
-export const noSearchResult = () => ({ type: NO_SEARCH_RESULT });
-export type NoSearchResult = {
-    type: typeof NO_SEARCH_RESULT
-};
-
-
 export const LOAD_CUSTOMERS = "LOAD_CUSTOMERS";
 export const loadCustomers = () => ({ type: LOAD_CUSTOMERS});
 export type LoadCustomers = {
@@ -54,6 +33,5 @@ export type GoHome = {
 };
 
 export type Actions = ShowProfile  
-    | ProcessSearch | SearchFinished | NoSearchResult
     | LoadCustomers | CustomersLoaded | CustomerLoadingFailed
     | GoHome;

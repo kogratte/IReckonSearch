@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomerStatusComponent } from './customer-status.component';
+import { QuickFactComponent } from '../quick-fact/quick-fact.component';
+import { MatIconModule } from '@angular/material';
+import { MyMaterialsModule } from '../my-materials/my-materials.module';
 
 describe('CustomerStatusComponent', () => {
   let component: CustomerStatusComponent;
@@ -8,7 +11,13 @@ describe('CustomerStatusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomerStatusComponent ]
+      declarations: [ 
+        CustomerStatusComponent,
+        QuickFactComponent
+     ],
+     imports: [
+       MyMaterialsModule
+     ]
     })
     .compileComponents();
   }));

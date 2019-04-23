@@ -89,24 +89,4 @@ export class CustomersService {
       })
     );
   }
-
-  filter(customers: Array<Customer>, input: string): Observable<Customer[]> {
-    if (!input || input.trim().length === 0 || customers.length === 0) {
-      return of(customers);
-    }
-    var r = new RegExp(`${input}`, 'ig');
-
-    return of(
-      customers.filter(c => {
-        return r.test(c.first_name) == true ||
-        r.test(c.last_name) == true ||
-        r.test(c.address) == true ||
-        r.test(c.email) == true ||
-        r.test(c.email2) == true ||
-        r.test(c.loyalty_member_id) == true ||
-        r.test(c.phone) == true ||
-        r.test(c.prefix) == true;
-      })
-    );
-  }
 }

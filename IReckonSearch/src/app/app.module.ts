@@ -22,7 +22,6 @@ import { OtherFactsComponent } from './other-facts/other-facts.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { CustomerDataComponent } from './customer-data/customer-data.component';
 import { EmptyComponent } from './empty/empty.component';
-import { NoResultComponent } from './no-result/no-result.component';
 import { QuickFactComponent } from './quick-fact/quick-fact.component';
 import { MyMaterialsModule } from './my-materials/my-materials.module';
 
@@ -40,7 +39,6 @@ import { MyMaterialsModule } from './my-materials/my-materials.module';
     UserListComponent,
     CustomerDataComponent,
     EmptyComponent,
-    NoResultComponent,
     QuickFactComponent,
   ],
   imports: [

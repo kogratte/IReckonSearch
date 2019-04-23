@@ -4,12 +4,10 @@ import { HomeComponent } from './home/home.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { CustomerDataComponent } from './customer-data/customer-data.component';
 import { EmptyComponent } from './empty/empty.component';
-import { NoResultComponent } from './no-result/no-result.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: "home", component: HomeComponent },
-  { path: "no-results", component: NoResultComponent },
   { path: "customer/:id", 
   component: CustomerDetailsComponent,
     children: [

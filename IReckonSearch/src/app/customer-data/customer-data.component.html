@@ -3,8 +3,7 @@
         <h2>Profile Detail</h2>
     </div>
     <div>
-
-        <mat-card class="mat-card-elevation-z8" *ngIf="customer">
+        <mat-card class="mat-card-elevation-z8" *ngIf="(customer$ | async) as customer">
 
             <mat-list>
                 <mat-list-item>
@@ -58,6 +57,19 @@
                 <mat-list-item>
                     <div class="label">Language Preference</div>
                     <div class="value">{{ customer.localid }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider *ngIf="customer.email"></mat-divider>
+                <mat-list-item *ngIf="customer.email">
+                    <div class="label">Email</div>
+                    <div class="value">{{ customer.email }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+
+                <mat-divider *ngIf="customer.email2"></mat-divider>
+                <mat-list-item *ngIf="customer.email2">
+                    <div class="label">Email</div>
+                    <div class="value">{{ customer.email2 }}</div>
                     <div class="icon"><mat-icon>create</mat-icon></div>
                 </mat-list-item>
             </mat-list>

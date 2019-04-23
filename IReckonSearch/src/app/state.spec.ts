@@ -1,12 +1,9 @@
 import { reducer, initialState } from './state';
 import {
     loadCustomers,
-    customersLoaded,
     customersLoadingFailed,
-    processSearch,
     Actions
 } from './actions';
-import { buildCustomer } from './effects.spec';
 
 
 describe('Reducers', () => {
@@ -17,35 +14,6 @@ describe('Reducers', () => {
 
             expect(currentState).toBe(initialState);
         });
-    });
-    describe("Search actions", () => {
-        describe("PROCESS_SEARCH", () => {
-            it("should set the loading flag", () => {
-                const _initState = { ...initialState, loading: false };
-
-                var currentState = reducer(_initState, processSearch("this is my research") as Actions);
-                expect(currentState.loading).toBeTruthy();
-                expect(currentState.searchInput).toEqual("this is my research");
-            });
-        });
-
-        describe("SEARCH_FINISHED", () => {
-            it("should reset the loading flag", () => {
-                const _initState = {
-                    ...initialState,
-                    loading: true,
-                    filteredCustomers: []
-                };
-                const stubedCustomers = [
-                    buildCustomer(5)
-                ];
-
-                var currentState = reducer(_initState, customersLoaded(stubedCustomers) as Actions);
-
-                expect(currentState.loading).toBeFalsy();
-            });
-        });
-
     });
 
     describe("Loading actions", () => {

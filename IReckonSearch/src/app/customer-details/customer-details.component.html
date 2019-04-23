@@ -1,7 +1,10 @@
 <mat-toolbar>
-  <mat-toolbar-row>
-    <h1 *ngIf="!(customer$ | async)">Profile: loading</h1>
-    <h1 *ngIf="(customer$ | async) as customer">
+  <mat-toolbar-row *ngIf="!(customer$ | async)">
+    <h1>Profile: loading</h1>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row *ngIf="customer$ | async as customer">
+    <h1>
       Profile: <img [src]="customer.photo" />&nbsp;{{ customer.first_name }} {{ customer.last_name }}
     </h1>
   </mat-toolbar-row>
