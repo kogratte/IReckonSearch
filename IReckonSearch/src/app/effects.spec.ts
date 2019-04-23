@@ -66,6 +66,20 @@ describe('App effects', () => {
       const req = httpTestingController.expectOne(customersUri);
       req.flush(stubedCustomers);
     });
+
+    it("should dispatch an error if result is null", () => {
+      actions.next(MyActions.loadCustomers());
+
+      effects.loadCustomers$.pipe(
+        map(x => {
+          expect(x).toEqual(MyActions.customersLoadingFailed());
+          return x;
+        })
+      ).subscribe();
+
+      const req = httpTestingController.expectOne(customersUri);
+      req.flush(null);
+    });
   })
   describe("SHOW_PROFILE", () => {
     it("should redirect to the customer profile page", () => {
@@ -94,13 +108,7 @@ describe('App effects', () => {
   });
 
   describe("CUSTOMERS_LOADING_FAILED", () => {
-    it("should reset the loading flag to false and redirect to error page", () => {
-      let newState = {
-        ...initialState,
-        loading: true
-      };
-
-      store.setState({ app: newState });
+    it("should redirect to error page", () => {
       actions.next(MyActions.customersLoadingFailed());
       effects.customerLoadingError$.subscribe(() => {
         expect(navigateSpy).toHaveBeenCalledWith(["/error"]);

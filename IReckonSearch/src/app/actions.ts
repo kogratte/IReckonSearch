@@ -21,6 +21,13 @@ export type ProcessSearch = {
     input: string
 };
 
+export const NO_SEARCH_RESULT = "NO_SEARCH_RESULT";
+export const noSearchResult = () => ({ type: NO_SEARCH_RESULT });
+export type NoSearchResult = {
+    type: typeof NO_SEARCH_RESULT
+};
+
+
 export const LOAD_CUSTOMERS = "LOAD_CUSTOMERS";
 export const loadCustomers = () => ({ type: LOAD_CUSTOMERS});
 export type LoadCustomers = {
@@ -40,6 +47,15 @@ export type CustomerLoadingFailed = {
     type: typeof CUSTOMERS_LOADING_FAILED
 };
 
+export const GO_HOME = "GO_HOME";
+export const goHome = () => ({ type: GO_HOME });
+export type GoHome = {
+    type: typeof GO_HOME
+};
+
+
+
 export type Actions = ShowProfile  
-    | ProcessSearch | SearchFinished
-    | LoadCustomers | CustomersLoaded | CustomerLoadingFailed;
+    | ProcessSearch | SearchFinished | NoSearchResult
+    | LoadCustomers | CustomersLoaded | CustomerLoadingFailed
+    | GoHome;

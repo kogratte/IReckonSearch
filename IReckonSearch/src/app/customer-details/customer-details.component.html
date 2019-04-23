@@ -1,3 +1,30 @@
-<p>
-  customer-details works!
-</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <h1 *ngIf="!(customer$ | async)">Profile: loading</h1>
+    <h1 *ngIf="(customer$ | async) as customer">
+      Profile: <img [src]="customer.photo" />&nbsp;{{ customer.first_name }} {{ customer.last_name }}
+    </h1>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <div class="padder"></div>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link *ngFor="let link of links" [routerLink]="link.route" routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive"> {{link.label}} </a>
+    </nav>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<div class="content">
+
+  <app-quick-facts class="quickFacts"></app-quick-facts>
+  
+  <div class="profile-detail">
+    <mat-card class="mat-elevation-z8">
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-card>
+  </div>
+  <mat-progress-spinner *ngIf="isLoading$ | async" mode="indeterminate"></mat-progress-spinner>
+</div>

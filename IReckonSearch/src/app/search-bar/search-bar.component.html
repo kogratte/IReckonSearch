@@ -1,3 +1,15 @@
-<p>
-  search-bar works!
-</p>
+<form class="search-form" name="search">
+  <div class="inputField">
+      <mat-icon>search</mat-icon>
+
+    <input  name="search" type="text" [disabled]="disabled" [(ngModel)]="input" [placeholder]="placeholder" />
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button (click)="search()" color="primary">
+      <mat-icon>search</mat-icon>
+    </button>
+
+  </div>
+
+</form>

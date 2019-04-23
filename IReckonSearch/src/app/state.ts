@@ -1,4 +1,4 @@
-import { Actions, SEARCH_FINISHED, CUSTOMERS_LOADED, CUSTOMERS_LOADING_FAILED, LOAD_CUSTOMERS, PROCESS_SEARCH } from './actions';
+import { Actions, SEARCH_FINISHED, CUSTOMERS_LOADED, CUSTOMERS_LOADING_FAILED, LOAD_CUSTOMERS, PROCESS_SEARCH, customersLoaded, NO_SEARCH_RESULT } from './actions';
 import { Customer } from './models';
 
 export type AppState = {
@@ -9,14 +9,16 @@ export type State = {
     searchInput: string;
     loading: boolean;
     customers: Customer[],
-    filteredCustomers: Customer[]
+    filteredCustomers: Customer[],
+    customersLoaded: boolean
 };
 
 export const initialState: State = {
     searchInput: "",
-    loading: true,
+    loading: false,
     customers: [],
-    filteredCustomers: []
+    filteredCustomers: [],
+    customersLoaded: false
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
@@ -32,13 +34,16 @@ export function reducer(state: State = initialState, action: Actions): State {
                 ...state,
                 loading: false,
                 customers: action.customers,
-                filteredCustomers: action.customers
+                filteredCustomers: action.customers,
+                customersLoaded: true
             };
 
         case CUSTOMERS_LOADING_FAILED:
             return {
                 ...state,
-                loading: false
+                loading: false,
+                customers: [],
+                filteredCustomers: []
             };
 
         case PROCESS_SEARCH:
@@ -53,6 +58,12 @@ export function reducer(state: State = initialState, action: Actions): State {
                 ...state,
                 loading: false,
                 filteredCustomers: action.filteredCustomers
+            };
+
+            case NO_SEARCH_RESULT:
+            return {
+                ...state,
+              loading: false
             };
 
         default:

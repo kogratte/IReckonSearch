@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink";
+@import 'colors';
 
 html,
 body {
@@ -10,21 +11,54 @@ body {
   margin: 0;
   padding: 0;
 
-  .container {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-
-    .header {
-      display: flex;
-      height: 200px;
-      background: #2488fa;
- 
-        color: white;
-    }
-
-    ::deep mat-progress-spinner {
-      color: red;
+  .mat-tab-label, .mat-tab-link {
+    color: white;
+  }
+  .mat-tab-nav-bar {
+    border-color: white;
+    
+    &.mat-primary {
+      .mat-ink-bar {
+        background-color: white;
+      }
+  
     }
   }
+  .mat-toolbar h1 {
+    font-size: 1.6em;
+  }
+
+  .content {
+    padding: 16px;
+    height: 100%;
+    background: $lightgrey;
+  }
+
+  .mat-toolbar {
+    color: white;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: inherit;
+    min-height: 200px;
+    max-height: 200px;
+
+    .mat-toolbar-row {
+      padding-right: 0;
+
+      flex: 1;
+      background: $primaryColor;
+    }
+  }
+}
+
+.flex-rows {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.flex-columns {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
 }

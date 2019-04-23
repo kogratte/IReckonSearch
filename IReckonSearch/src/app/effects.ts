@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType, OnInitEffects } from '@ngrx/effects';
-import { filter, map, switchMap, withLatestFrom, startWith, } from 'rxjs/operators';
+import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Store, Action, select } from '@ngrx/store';
+import { Store, Action } from '@ngrx/store';
 import { AppState } from './state';
 import {
     searchFinished, SEARCH_FINISHED,
@@ -15,13 +15,15 @@ import {
     customersLoaded,
     loadCustomers,
     LOAD_CUSTOMERS,
-    processSearch
+    customersLoadingFailed,
+    noSearchResult,
+    NO_SEARCH_RESULT,
+    NoSearchResult,
+    GoHome,
+    GO_HOME
 } from './actions';
 import { of } from 'rxjs';
-import { Customer } from './models';
-import { HttpClient } from '@angular/common/http';
-
-export const customersUri = "https://profiles-list.firebaseio.com/Data.json";
+import { CustomersService } from './customers.service';
 
 @Injectable()
 export class AppEffects implements OnInitEffects {
@@ -29,7 +31,7 @@ export class AppEffects implements OnInitEffects {
         private actions$: Actions,
         private store: Store<AppState>,
         private router: Router,
-        private httpClient: HttpClient
+        private customersService: CustomersService
     ) { }
 
     ngrxOnInitEffects(): Action {
@@ -39,14 +41,21 @@ export class AppEffects implements OnInitEffects {
     @Effect()
     loadCustomers$ = this.actions$.pipe(
         ofType(LOAD_CUSTOMERS),
-        switchMap(() => this.httpClient.get<Array<Customer>>(customersUri)),
-        map(customers => customersLoaded(customers))
+        switchMap(() => this.customersService.getAll().pipe(            
+            map(c => {
+                console.log("Get all result", c);
+                return c;
+            })
+        )),
+        switchMap(customers => of(customersLoaded(customers)))
     );
 
     @Effect({ dispatch: false })
     showProfile$ = this.actions$.pipe(
         ofType<ShowProfile>(SHOW_PROFILE),
-        switchMap(x => of(this.router.navigate(['/customer/:id', { id: x.customer.id }])))
+        map(x => {
+            this.router.navigate(['customer', x.customer.id, "data"]);
+        })
     );
 
     @Effect({ dispatch: false })
@@ -61,27 +70,36 @@ export class AppEffects implements OnInitEffects {
     @Effect({ dispatch: false })
     customerLoadingError$ = this.actions$.pipe(
         ofType<CustomerLoadingFailed>(CUSTOMERS_LOADING_FAILED),
-        switchMap(() => of(this.router.navigate(['/error'])))
+        map(() => this.router.navigate(['/error']))
     );
 
     @Effect()
     searching$ = this.actions$.pipe(
         ofType<ProcessSearch>(PROCESS_SEARCH),
-        switchMap((x) => x.input),
-        withLatestFrom(this.store.pipe(select((s: AppState) => s.app.customers))),
-        switchMap(([input, rawCustomers]) => {
-            if (input.trim().length === 0 || rawCustomers.length === 0) {
-                return of(rawCustomers);
-            }
-            var r = new RegExp(`${input}`, 'ig');
-            const filteredCustomers = rawCustomers.filter(c => {
-                return r.test(c.first_name) == true;
-            });
-
-            return of(filteredCustomers);
-        }),
+        switchMap((x) => of(x.input)),
+        withLatestFrom(this.customersService.getAll()),
+        switchMap(([input, rawCustomers]) => this.customersService.filter(rawCustomers, input)),
         switchMap(filteredCustomers => {
-            return of(searchFinished(filteredCustomers));
+            if (filteredCustomers.length === 0) {
+                return of(noSearchResult());
+            }
+            return of(searchFinished(filteredCustomers))
+        })
+    );
+
+    @Effect({dispatch: false})
+    redirectToNoResultPage$ = this.actions$.pipe(
+        ofType<NoSearchResult>(NO_SEARCH_RESULT),
+        map(() => {
+            this.router.navigate(["no-results"]);
+        })
+    )
+
+    @Effect({dispatch: false})
+    goHome$ = this.actions$.pipe(
+        ofType<GoHome>(GO_HOME),
+        map(() => {
+            this.router.navigate(["home"]);
         })
     )
 }

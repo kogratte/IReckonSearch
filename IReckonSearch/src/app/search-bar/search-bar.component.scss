@@ -1,0 +1,46 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+$margin: 14px;
+
+form.search-form {
+  flex: 1;
+  display: flex;
+
+  padding: 4px;
+  font-size: 0.7em;
+
+  .inputField {
+    width: 100%;
+    color: black;
+    background: white;
+    display: flex;
+    flex: 1;
+    align-items: center;
+
+    mat-icon {
+        margin: 0 $margin;
+    }
+
+    input {
+        border: none;
+        width: 95%;
+        padding: $margin;
+    }
+  }
+
+  .actions {
+    flex: 0.1;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 16px;
+
+    button {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}

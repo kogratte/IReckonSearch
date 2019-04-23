@@ -1,0 +1,70 @@
+@import "../../colors";
+
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+$quickFactsWidth: 35%;
+$quickFactsMaxWidth: 300px;
+$quickFactsMarginRight: 20px;
+
+mat-toolbar.mat-toolbar {
+  h1 {
+    display: flex;
+    align-items: center;
+    img {
+      margin-left: 20px;
+      margin-right: 20px;
+      border-radius: 40px;
+      height: 50px;
+      width: 50px;
+      padding: 2px;
+    }
+  }
+  .mat-toolbar-row {
+    div.padder {
+      width: $quickFactsWidth;
+      max-width: $quickFactsMaxWidth;
+    }
+    nav.mat-tab-nav-bar {
+      padding-left: $quickFactsMarginRight;
+      display: flex;
+      flex: 1;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex: 1;
+
+  .quickFacts {
+    width: $quickFactsWidth;
+    max-width: $quickFactsMaxWidth;
+    top: -95px;
+    position: relative;
+    margin-right: $quickFactsMarginRight;
+  }
+
+  .profile-detail {
+    display: flex;
+    width: 80%;
+    padding-bottom: 95px;
+
+    mat-card.mat-card {
+      padding: 15px 10px;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      .container {
+        display: flex;
+        flex: 1;
+        background: $lightgrey;
+        border: 1px solid lightgrey;
+        padding: 10px;
+      }
+    }
+  }
+}
