@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+.flex-rows {
+  mat-card.mat-card {
+    border-radius: 0;
+    mat-list.mat-list {
+      padding-top: 0;
+      mat-list-item.mat-list-item {
+        div.label {
+          flex: 0.3;
+        }
+
+        div.value {
+          flex: 0.6;
+          font-weight: bolder;
+        }
+
+        div.icon {
+            flex: 0.1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            
+            mat-icon.mat-icon {
+                color: lightgrey;
+                }
+        }
+      }
+    }
+  }
+}

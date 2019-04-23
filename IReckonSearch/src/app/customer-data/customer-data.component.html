@@ -1,0 +1,66 @@
+<div class="flex-rows">
+    <div>
+        <h2>Profile Detail</h2>
+    </div>
+    <div>
+
+        <mat-card class="mat-card-elevation-z8" *ngIf="customer">
+
+            <mat-list>
+                <mat-list-item>
+                        <div class="label">Prefix</div>
+                        <div class="value">{{ customer.prefix }}</div>
+                        <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">First name</div>
+                    <div class="value">{{ customer.first_name }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">Last name</div>
+                    <div class="value">{{ customer.last_name }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">Suffix</div>
+                    <div class="value">{{ customer.suffix }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">Loyalty Member ID</div>
+                    <div class="value">{{ customer.loyalti_member_id }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">Phone</div>
+                    <div class="value">{{ customer.phone }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">Address</div>
+                    <div class="value">{{ customer.address }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">Birthdate</div>
+                    <div class="value">{{ customer.birthdate | date }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="label">Language Preference</div>
+                    <div class="value">{{ customer.localid }}</div>
+                    <div class="icon"><mat-icon>create</mat-icon></div>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
+    </div>
+</div>

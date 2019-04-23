@@ -1,0 +1,53 @@
+.mat-column- {
+  &photo {
+    flex: 0.5;
+    img {
+      height: 40px;
+      width: 40px;
+      margin: auto;
+      border-radius: 40px;
+      padding: 2px;
+      border: 1px solid lightgrey;
+    }
+  }
+
+  &localid {
+    flex: 0.4;
+  }
+
+  &first_name {
+      flex: 0.7;
+  }
+
+  &links {
+    &[role="columnheader"] {
+      div {
+        padding: 0 16px;
+      }
+    }
+    * {
+      display: flex;
+      align-items: flex-end;
+      flex: 1;
+      flex-direction: column;
+    }
+  }
+}
+
+mat-header-row.mat-header-row {
+  .mat-header-cell {
+    font-weight: bolder;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
+
+mat-row.mat-row {
+    padding: 5px 0;
+}
+
+.hidden {
+    display: none !important;
+}

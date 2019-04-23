@@ -1,0 +1,57 @@
+<mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="photo">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <img class="avatar" [src]="element.photo" />
+      </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="localid">
+      <mat-header-cell mat-sort-header *matHeaderCellDef> Local ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.localid}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell mat-sort-header *matHeaderCellDef> Email Address </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="first_name">
+      <mat-header-cell mat-sort-header *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.first_name}} {{ element.last_name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <mat-header-cell mat-sort-header *matHeaderCellDef> Phone Number </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.phone }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell mat-sort-header *matHeaderCellDef> Address </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.address }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="modified">
+      <mat-header-cell mat-sort-header *matHeaderCellDef> Modified </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.modified | date }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="links">
+      <mat-header-cell class="actions" *matHeaderCellDef> <div>View</div> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a mat-button (click)="showProfile(element)">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </a>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSize]="10" class="mat-elevation-z8"
+    [pageSizeOptions]="[1, 5, 10, 20]" [ngClass]="{'hidden': displayError}" showFirstLastButtons></mat-paginator>
+    

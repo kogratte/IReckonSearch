@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+$iconWidth: 0.1;
+
+app-quick-fact {
+  .flex-columns {
+    .icon {
+      flex: $iconWidth;
+    }
+    .text {
+      flex: 0.4;
+    }
+    .data {
+      flex: 0.6 - $iconWidth;
+      font-weight: bolder;
+    }
+  }
+}

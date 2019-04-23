@@ -1,0 +1,15 @@
+<div class="quick-fact">
+    <header>
+      {{ title }}
+      <mat-icon [color]="primary">open_in_new</mat-icon>
+    </header>
+    <content>
+      <div *ngIf="icon" class="icon">
+        <mat-icon [ngStyle]="{ color: iconColor || 'black'}">{{ icon }}</mat-icon>
+      </div>
+      <div class="text" [ngClass]="{'with-icon': icon}">
+        <ng-content></ng-content>
+      </div>
+    </content>
+  </div>
+  

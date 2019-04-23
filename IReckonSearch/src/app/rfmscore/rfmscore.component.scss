@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+app-quick-fact {
+  .flex-columns {
+    align-items: center;
+
+    div {
+      flex: 0.25;
+      align-content: center;
+
+      &:first-child {
+        position: relative;
+        .label {
+          position: absolute;
+          font-size: 0.7em;
+          top: 9px;
+          left: 5px;
+        }
+      }
+    }
+  }
+}

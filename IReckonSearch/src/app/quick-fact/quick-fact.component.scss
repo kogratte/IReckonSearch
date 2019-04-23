@@ -1,0 +1,45 @@
+@import '../../colors';
+
+:host {
+    display: flex;
+    flex: 1;
+}
+$iconWidth: 0.2;
+
+.quick-fact {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-bottom: 30px;
+    header {
+        position: relative;
+        padding-bottom: 5px;
+        border-bottom: 1px solid lightgray;
+        font-weight: bolder;
+        mat-icon.mat-icon {
+            font-size: 1em;
+            position: absolute;
+            right: 0;
+            color: $primaryColor;
+        }
+    }
+
+    content {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        margin-top: 10px;
+
+        .text {
+            flex: 1; 
+
+            &-with-icon {
+                flex: calc(1 - $iconWidth);
+            }
+        };
+
+        .icon {
+            flex: $iconWidth;
+        }
+    }
+}
