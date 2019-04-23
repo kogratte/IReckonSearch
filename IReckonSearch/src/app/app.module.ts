@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
-import { MatToolbarModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatTabsModule, MatTableModule, MatPaginatorModule, MatSortModule, MatProgressSpinnerModule, MatCardModule, MatDividerModule, MatListModule } from '@angular/material';
 import { StoreModule } from "@ngrx/store";
 import { reducer } from './state';
 import { EffectsModule } from '@ngrx/effects';
@@ -15,7 +14,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ErrorComponent } from './error/error.component';
 import { QuickFactsComponent } from './quick-facts/quick-facts.component';
 import { CustomerStatusComponent } from './customer-status/customer-status.component';
 import { CustomerTopThreeComponent } from './customer-top-three/customer-top-three.component';
@@ -26,6 +24,7 @@ import { CustomerDataComponent } from './customer-data/customer-data.component';
 import { EmptyComponent } from './empty/empty.component';
 import { NoResultComponent } from './no-result/no-result.component';
 import { QuickFactComponent } from './quick-fact/quick-fact.component';
+import { MyMaterialsModule } from './my-materials/my-materials.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,6 @@ import { QuickFactComponent } from './quick-fact/quick-fact.component';
     HomeComponent,
     SearchBarComponent,
     CustomerDetailsComponent,
-    ErrorComponent,
     QuickFactsComponent,
     CustomerStatusComponent,
     CustomerTopThreeComponent,
@@ -49,20 +47,9 @@ import { QuickFactComponent } from './quick-fact/quick-fact.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatButtonModule,
+    MyMaterialsModule,
     HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatCardModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatListModule,
+    
     StoreModule.forRoot({
       app: reducer
     }),

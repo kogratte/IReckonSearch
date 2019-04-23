@@ -7,7 +7,7 @@ export class Customer {
     address: string;
     birthdate: string;
     localid: number;
-    loyalti_member_id: string;
+    loyalty_member_id: string;
     modified: string;
     phone: string;
     photo: string;

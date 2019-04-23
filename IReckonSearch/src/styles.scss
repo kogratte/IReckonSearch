@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+//@import "assets/custom-material-theme";
 @import "~@angular/material/prebuilt-themes/indigo-pink";
 @import 'colors';
 
@@ -51,6 +52,18 @@ body {
   }
 }
 
+.padding {
+  &-t, &-tb, &-bt {
+    &5 { padding-top: 5px; }
+    &10 { padding-top: 10px; }
+  }
+  &-b, &-tb, &-bt {
+    &5 { padding-bottom: 5px; }
+    &10 {
+      padding-bottom: 10px;
+    }
+  }
+}
 .flex-rows {
   display: flex;
   flex-direction: column;

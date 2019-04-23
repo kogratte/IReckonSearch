@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType, OnInitEffects } from '@ngrx/effects';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Store, Action } from '@ngrx/store';
-import { AppState } from './state';
+import {  Action } from '@ngrx/store';
 import {
     searchFinished, SEARCH_FINISHED,
     ProcessSearch,
@@ -15,10 +14,7 @@ import {
     customersLoaded,
     loadCustomers,
     LOAD_CUSTOMERS,
-    customersLoadingFailed,
     noSearchResult,
-    NO_SEARCH_RESULT,
-    NoSearchResult,
     GoHome,
     GO_HOME
 } from './actions';
@@ -29,7 +25,6 @@ import { CustomersService } from './customers.service';
 export class AppEffects implements OnInitEffects {
     constructor(
         private actions$: Actions,
-        private store: Store<AppState>,
         private router: Router,
         private customersService: CustomersService
     ) { }
@@ -41,20 +36,17 @@ export class AppEffects implements OnInitEffects {
     @Effect()
     loadCustomers$ = this.actions$.pipe(
         ofType(LOAD_CUSTOMERS),
-        switchMap(() => this.customersService.getAll().pipe(            
-            map(c => {
-                console.log("Get all result", c);
-                return c;
-            })
-        )),
-        switchMap(customers => of(customersLoaded(customers)))
+        switchMap(() => this.customersService.getAll()),
+        switchMap(customers => {
+            return of(customersLoaded(customers));
+        })
     );
 
     @Effect({ dispatch: false })
     showProfile$ = this.actions$.pipe(
         ofType<ShowProfile>(SHOW_PROFILE),
         map(x => {
-            this.router.navigate(['customer', x.customer.id, "data"]);
+            this.router.navigate(['customer', x.customer.loyalty_member_id, "data"]);
         })
     );
 
@@ -87,13 +79,13 @@ export class AppEffects implements OnInitEffects {
         })
     );
 
-    @Effect({dispatch: false})
-    redirectToNoResultPage$ = this.actions$.pipe(
-        ofType<NoSearchResult>(NO_SEARCH_RESULT),
-        map(() => {
-            this.router.navigate(["no-results"]);
-        })
-    )
+    // @Effect({dispatch: false})
+    // redirectToNoResultPage$ = this.actions$.pipe(
+    //     ofType<NoSearchResult>(NO_SEARCH_RESULT),
+    //     map(() => {
+    //         this.router.navigate(["no-results"]);
+    //     })
+    // )
 
     @Effect({dispatch: false})
     goHome$ = this.actions$.pipe(

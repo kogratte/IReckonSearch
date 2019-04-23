@@ -8,6 +8,8 @@
 $quickFactsWidth: 35%;
 $quickFactsMaxWidth: 300px;
 $quickFactsMarginRight: 20px;
+$avatarWidth: 50px;
+$padding: 10px;
 
 mat-toolbar.mat-toolbar {
   h1 {
@@ -17,8 +19,8 @@ mat-toolbar.mat-toolbar {
       margin-left: 20px;
       margin-right: 20px;
       border-radius: 40px;
-      height: 50px;
-      width: 50px;
+      height: $avatarWidth;
+      width: $avatarWidth;
       padding: 2px;
     }
   }
@@ -53,7 +55,7 @@ mat-toolbar.mat-toolbar {
     padding-bottom: 95px;
 
     mat-card.mat-card {
-      padding: 15px 10px;
+      padding: calc(1.5 * $padding) $padding;
       display: flex;
       flex: 1;
       flex-direction: column;
@@ -63,7 +65,7 @@ mat-toolbar.mat-toolbar {
         flex: 1;
         background: $lightgrey;
         border: 1px solid lightgrey;
-        padding: 10px;
+        padding: $padding;
       }
     }
   }

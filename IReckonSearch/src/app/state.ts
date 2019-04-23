@@ -1,4 +1,4 @@
-import { Actions, SEARCH_FINISHED, CUSTOMERS_LOADED, CUSTOMERS_LOADING_FAILED, LOAD_CUSTOMERS, PROCESS_SEARCH, customersLoaded, NO_SEARCH_RESULT } from './actions';
+import { Actions, SEARCH_FINISHED, CUSTOMERS_LOADED, CUSTOMERS_LOADING_FAILED, LOAD_CUSTOMERS, PROCESS_SEARCH, customersLoaded, NO_SEARCH_RESULT, SHOW_PROFILE } from './actions';
 import { Customer } from './models';
 
 export type AppState = {
@@ -10,7 +10,9 @@ export type State = {
     loading: boolean;
     customers: Customer[],
     filteredCustomers: Customer[],
-    customersLoaded: boolean
+    customersLoaded: boolean,
+    searchFailed: boolean,
+    currentCustomer: Customer | undefined
 };
 
 export const initialState: State = {
@@ -18,7 +20,9 @@ export const initialState: State = {
     loading: false,
     customers: [],
     filteredCustomers: [],
-    customersLoaded: false
+    customersLoaded: false,
+    searchFailed: false,
+    currentCustomer: undefined
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
@@ -27,6 +31,12 @@ export function reducer(state: State = initialState, action: Actions): State {
             return {
                 ...state,
                 loading: true
+            };
+
+            case SHOW_PROFILE:
+            return {
+                ...state,
+                currentCustomer: action.customer
             };
 
         case CUSTOMERS_LOADED:
@@ -50,7 +60,8 @@ export function reducer(state: State = initialState, action: Actions): State {
             return {
                 ...state,
                 loading: true,
-                searchInput: action.input
+                searchInput: action.input,
+                searchFailed: false
             };
 
         case SEARCH_FINISHED:
@@ -63,7 +74,8 @@ export function reducer(state: State = initialState, action: Actions): State {
             case NO_SEARCH_RESULT:
             return {
                 ...state,
-              loading: false
+              loading: false,
+              searchFailed: true
             };
 
         default:

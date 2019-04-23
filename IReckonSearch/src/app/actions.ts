@@ -53,8 +53,6 @@ export type GoHome = {
     type: typeof GO_HOME
 };
 
-
-
 export type Actions = ShowProfile  
     | ProcessSearch | SearchFinished | NoSearchResult
     | LoadCustomers | CustomersLoaded | CustomerLoadingFailed

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { ErrorComponent } from './error/error.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { CustomerDataComponent } from './customer-data/customer-data.component';
 import { EmptyComponent } from './empty/empty.component';
@@ -19,7 +18,6 @@ export const routes: Routes = [
       { path: "profileIds", component: EmptyComponent },
       { path: "timeline", component: EmptyComponent }
     ]},
-  { path: "error", component: ErrorComponent },
   { path: '**', redirectTo: '/home' }
 ];
 
