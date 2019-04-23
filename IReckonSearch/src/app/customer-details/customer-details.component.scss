@@ -7,6 +7,7 @@
 }
 $quickFactsWidth: 35%;
 $quickFactsMaxWidth: 300px;
+$quickFactsMinWidth: 250px;
 $quickFactsMarginRight: 20px;
 $avatarWidth: 50px;
 $padding: 10px;
@@ -27,6 +28,7 @@ mat-toolbar.mat-toolbar {
   .mat-toolbar-row {
     div.padder {
       width: $quickFactsWidth;
+      min-width: $quickFactsMinWidth;
       max-width: $quickFactsMaxWidth;
     }
     nav.mat-tab-nav-bar {
@@ -44,6 +46,7 @@ mat-toolbar.mat-toolbar {
   .quickFacts {
     width: $quickFactsWidth;
     max-width: $quickFactsMaxWidth;
+    min-width: $quickFactsMinWidth;
     top: -95px;
     position: relative;
     margin-right: $quickFactsMarginRight;

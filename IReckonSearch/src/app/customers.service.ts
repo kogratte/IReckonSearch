@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Customer } from './models';
 import { HttpClient } from '@angular/common/http';
-import { switchMap, catchError, map, distinctUntilChanged, filter } from 'rxjs/operators';
+import { switchMap, catchError, map, distinctUntilChanged } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from './state';
-import { customersLoadingFailed, loadCustomers } from './actions';
+import { customersLoadingFailed } from './actions';
 import { Router } from '@angular/router';
 
 @Injectable({
