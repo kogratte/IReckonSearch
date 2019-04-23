@@ -24,7 +24,6 @@ export class CustomerDetailsComponent implements OnInit {
     label: "Activity Timeline",
     route: 'timeline'
   }];
-  customersLoaded: boolean;
 
   constructor(private store: Store<AppState>,
     private customerService: CustomersService,

@@ -1,4 +1,4 @@
-import { Actions, SEARCH_FINISHED, CUSTOMERS_LOADED, CUSTOMERS_LOADING_FAILED, LOAD_CUSTOMERS, PROCESS_SEARCH, customersLoaded, NO_SEARCH_RESULT, SHOW_PROFILE } from './actions';
+import { Actions, SEARCH_FINISHED, CUSTOMERS_LOADED, CUSTOMERS_LOADING_FAILED, LOAD_CUSTOMERS, PROCESS_SEARCH, NO_SEARCH_RESULT, SHOW_PROFILE } from './actions';
 import { Customer } from './models';
 
 export type AppState = {
@@ -10,7 +10,6 @@ export type State = {
     loading: boolean;
     customers: Customer[],
     filteredCustomers: Customer[],
-    customersLoaded: boolean,
     searchFailed: boolean,
     currentCustomer: Customer | undefined
 };
@@ -20,7 +19,6 @@ export const initialState: State = {
     loading: false,
     customers: [],
     filteredCustomers: [],
-    customersLoaded: false,
     searchFailed: false,
     currentCustomer: undefined
 };
@@ -44,8 +42,7 @@ export function reducer(state: State = initialState, action: Actions): State {
                 ...state,
                 loading: false,
                 customers: action.customers,
-                filteredCustomers: action.customers,
-                customersLoaded: true
+                filteredCustomers: action.customers
             };
 
         case CUSTOMERS_LOADING_FAILED:
