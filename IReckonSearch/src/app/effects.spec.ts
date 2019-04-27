@@ -22,16 +22,6 @@ describe('App effects', () => {
   let customersSvc = jasmine.createSpyObj('customersService', {
     "getAll": jasmine.createSpy()
   });
-  const customers = [
-    { ...buildCustomer(5), first_name: "Will", last_name: "Smith" },
-    { ...buildCustomer(6), first_name: "Bill", last_name: "Gates" },
-    { ...buildCustomer(7), first_name: "Donald", last_name: "Duck" },
-    { ...buildCustomer(8), first_name: "Donald", last_name: "Trump" },
-    { ...buildCustomer(9), first_name: "Iron", last_name: "Man" },
-    { ...buildCustomer(10), first_name: "Super", last_name: "Man" },
-    { ...buildCustomer(10), first_name: "Manuel", last_name: "Dos Santos" },
-    { ...buildCustomer(10), first_name: "Ronald", last_name: "McDonald" },
-  ];
 
   beforeEach(() => {
 
@@ -66,32 +56,15 @@ describe('App effects', () => {
         buildCustomer(5)
       ];
       spyOn(customersSvc, 'getAll').and.returnValue(of(stubedCustomers));
-      
+
       effects.loadCustomers$.pipe(
         map(x => {
           expect(x).toEqual(MyActions.customersLoaded(stubedCustomers));
           return x;
         })
       ).subscribe();
-
-      // const req = httpTestingController.expectOne(customersUri);
-      // req.flush(stubedCustomers);
     });
-
-    // it("should dispatch an error if result is null", () => {
-    //   actions.next(MyActions.loadCustomers());
-      
-    //   spyOn(customersSvc, 'getAll').and.throwError("totot");
-     
-    //   effects.loadCustomers$.pipe(
-    //     map(x => {
-    //       expect(x).toEqual(MyActions.customersLoadingFailed());
-    //       return x;
-    //     })
-    //   ).subscribe();
-
-    // });
-  })
+  });
   describe("SHOW_PROFILE", () => {
     it("should redirect to the customer profile page", () => {
       const customer: Customer = {

@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType, OnInitEffects } from '@ngrx/effects';
-import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import {  map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Action, Store, select } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import {
     SHOW_PROFILE,
     ShowProfile,
