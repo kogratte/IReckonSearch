@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {  Observable } from 'rxjs';
-import { filter, map, switchMap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
 import { Customer } from '../models';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CustomersService } from '../customers.service';
+import { ActivatedRoute } from '@angular/router';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { loadCustomer } from '../actions';
+import { AppState } from '../state';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-customer-details',
@@ -28,22 +30,19 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     route: 'timeline'
   }];
 
-  constructor(private customerService: CustomersService,
-    private router: Router,
-    private activeRoute: ActivatedRoute) { }
+  constructor(private activeRoute: ActivatedRoute, private store: Store<AppState>) { 
+      this.activeRoute.paramMap.pipe(
+        map(params => params.get("id")),
+        filter(id => !!id),
+        tap(id => { 
+          this.store.dispatch(loadCustomer(id));
+      })).subscribe();
+    }
 
   ngOnInit() {
-    this.customer$ = this.activeRoute.paramMap.pipe(
-      map(params => params.get("id")),
-      filter(id => !!id),
-      switchMap(customerId => this.customerService.get(customerId).pipe(
-        untilDestroyed(this),
-        catchError((e, c) => {
-          this.router.navigate(["/"]);
-          throw e;
-        })
-      ))
+    this.customer$ = this.store.pipe(
+      select(s => s.app.currentCustomer),
+      untilDestroyed(this)
     );
-    this.customer$.subscribe(customer => this.customer = customer);
   }
 }

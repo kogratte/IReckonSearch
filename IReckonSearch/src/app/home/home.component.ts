@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { Customer } from '../models';
 import { showProfile } from '../actions';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { filter, map, combineLatest, withLatestFrom } from 'rxjs/operators';
+import { filter, map, combineLatest, withLatestFrom, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
@@ -27,34 +27,30 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading$ = this.store.select(s => s.app.loading);
 
+    // WTF?
     this.customers$ = this.store.pipe(
       select(s => s.app.customers),
       filter(x => x !== null),
       combineLatest(this.searchInput),
-      untilDestroyed(this),
-      map(([customers, search]) => this.filterCustomers(customers, search)),
-      withLatestFrom(this.searchInput),
-      map(([results, search]) => {
-        if (search && search.length > 0) {
-          this.handleSearchResults(results);
-        }
-
-        return results;
+      map(([customers, search]) => {
+        return {
+          'customers': this.filterCustomers(customers, search),
+          'search': search  
+        };
       }),
-      filter(results => results.length > 0)
-    );    
-  }
-
-  handleSearchResults(results: Customer[]): Customer[] {
-    if (results.length === 0) {
-      Promise.resolve().then(() => { 
-        this.snackbar.open('No results match your criterias', '', {
-          duration: 3000
-        });  
-       });
-    }
-
-    return results;
+      tap(searchResult => {
+        if (searchResult.search && searchResult.search.length > 0 && searchResult.customers && searchResult.customers.length === 0) {
+          Promise.resolve().then(() => { // Mandatory to avoid an error...
+            this.snackbar.open('No results match your criterias', '', {
+              duration: 3000
+            });
+          });
+        }
+      }),
+      filter(results => results.customers.length > 0),
+      map(result => result.customers),
+      untilDestroyed(this)
+    );
   }
 
   filterCustomers(customers: Customer[], search: string) {

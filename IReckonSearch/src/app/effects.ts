@@ -1,18 +1,28 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType, OnInitEffects } from '@ngrx/effects';
-import {  map, switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { map, switchMap, filter, catchError } from 'rxjs/operators';
+import { Router, ActivationEnd, ActivatedRouteSnapshot } from '@angular/router';
 import { Action, Store } from '@ngrx/store';
 import {
     SHOW_PROFILE,
     ShowProfile,
-    CustomerLoadingFailed,
+    CustomersLoadingFailed,
     CUSTOMERS_LOADING_FAILED,
     customersLoaded,
     loadCustomers,
     LOAD_CUSTOMERS,
     GoHome,
-    GO_HOME
+    GO_HOME,
+    CUSTOMER_LOADING_FAILED,
+    CustomerLoadingFailed,
+    goHome,
+    customerLoaded,
+    initApp,
+    INIT_APP,
+    InitApp,
+    LoadCustomer,
+    LOAD_CUSTOMER,
+    customerLoadingFailed
 } from './actions';
 import { of } from 'rxjs';
 import { CustomersService } from './customers.service';
@@ -28,9 +38,28 @@ export class AppEffects implements OnInitEffects {
     ) {
     }
 
+    // When effects are inited, an initial action is dispatched.
     ngrxOnInitEffects(): Action {
-        return loadCustomers();
+        return initApp();
     };
+
+    @Effect()
+    initApp$ = this.actions$.pipe(
+        ofType<InitApp>(INIT_APP),
+        switchMap(_ => {
+            let router$ = this.router.events.pipe(
+                filter(event => event instanceof ActivationEnd),
+                map((event: ActivationEnd) => event.snapshot),
+                //  In a perfect world, we also load specific customer from here, but the path is /data and not the full url
+                filter((route: ActivatedRouteSnapshot) => route.routeConfig.path === "home"),
+                map(_ => loadCustomers())
+            );
+            
+            router$.subscribe();
+
+            return router$;
+        })
+    );
 
     @Effect()
     loadCustomers$ = this.actions$.pipe(
@@ -46,8 +75,8 @@ export class AppEffects implements OnInitEffects {
     );
 
     @Effect({ dispatch: false })
-    customerLoadingError$ = this.actions$.pipe(
-        ofType<CustomerLoadingFailed>(CUSTOMERS_LOADING_FAILED),
+    customersLoadingError$ = this.actions$.pipe(
+        ofType<CustomersLoadingFailed>(CUSTOMERS_LOADING_FAILED),
         map(() => this.router.navigate(['/error']))
     );
 
@@ -55,5 +84,24 @@ export class AppEffects implements OnInitEffects {
     goHome$ = this.actions$.pipe(
         ofType<GoHome>(GO_HOME),
         map(() => this.router.navigate(["home"]))
-    )
+    );
+
+    @Effect()
+    customerLoadingFailed$ = this.actions$.pipe(
+        ofType<CustomerLoadingFailed>(CUSTOMER_LOADING_FAILED),
+        switchMap(() => of(goHome()))
+    );
+
+    @Effect()
+    loadCustomer$ = this.actions$.pipe(
+        ofType<LoadCustomer>(LOAD_CUSTOMER),
+        switchMap(_ => this.customersService.get(_.id).pipe(
+            map(customer => {
+                return customerLoaded(customer);
+            }),
+            catchError(([err, c]) => {
+                return of(customerLoadingFailed());
+            })    
+        ))
+    );
 }

@@ -47,10 +47,11 @@ import { MyMaterialsModule } from './my-materials/my-materials.module';
     BrowserAnimationsModule,
     MyMaterialsModule,
     HttpClientModule,
-    
+    // Here we configure the store with reducers
     StoreModule.forRoot({
       app: reducer
     }),
+    // And the attached effects
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({
       name: `IReckonSearch - @ngrx DevTools`,
